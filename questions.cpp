@@ -137,24 +137,39 @@ print(fractional_knapsack(items, capacity))
 #include <iostream>
 using namespace std;
 
-int binarySearch(int arr[], int size, int target) {	
-    int low = 0;     
-    int high = size - 1;    
+int binarySearch(int arr[], int n, int key) {
+    int low = 0, high = n - 1;
 
-    while (low <= high) {        
-        int mid = low + (high - low) / 2; // Correct midpoint calculation
+    while (low <= high) {
+        int mid = (low + high) / 2;
 
-        if (arr[mid] == target) {
-            return mid; // Return the index
-        } 
-        else if (arr[mid] < target) {
-            low = mid + 1;
-        } 
-        else {
-            high = mid - 1;
-        }
+        if (arr[mid] == key)
+            return mid;          // Element found
+        else if (arr[mid] < key)
+            low = mid + 1;       // Search in right half
+        else
+            high = mid - 1;      // Search in left half
     }
-    return -1; // Target not found 
+
+    return -1; // Element not found
+}
+
+int main() {
+    int arr[] = {2, 5, 8, 12, 16, 23, 38, 56, 72, 91};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int key;
+
+    cout << "Enter element to search: ";
+    cin >> key;
+
+    int result = binarySearch(arr, n, key);
+
+    if (result != -1)
+        cout << "Element found at index: " << result << endl;
+    else
+        cout << "Element not found in the array." << endl;
+
+    return 0;
 }
 
 
@@ -162,61 +177,46 @@ int binarySearch(int arr[], int size, int target) {
 
 def mergeSort(arr):
     if len(arr) > 1:
-
-        # Find the middle point and divide the array
+        # Find the middle point
         mid = len(arr) // 2
-        start = arr[:mid]
-        end = arr[mid:]
 
-        # Sort the two halves
-        mergeSort(start)
-        mergeSort(end)
+        # Divide the array into two halves
+        left = arr[:mid]
+        right = arr[mid:]
+
+        # Sort both halves
+        mergeSort(left)
+        mergeSort(right)
 
         i = j = k = 0
 
         # Merge the sorted halves
-        while i < len(start) and j < len(end):
-            if start[i] < end[j]:
-                arr[k] = start[i]
+        while i < len(left) and j < len(right):
+            if left[i] < right[j]:
+                arr[k] = left[i]
                 i += 1
             else:
-                arr[k] = end[j]
+                arr[k] = right[j]
                 j += 1
             k += 1
 
-        # Copy any remaining elements
-        while i < len(start):
-            arr[k] = start[i]
+        # Copy any remaining elements of left[]
+        while i < len(left):
+            arr[k] = left[i]
             i += 1
             k += 1
 
-        while j < len(end):
-            arr[k] = end[j]
+        # Copy any remaining elements of right[]
+        while j < len(right):
+            arr[k] = right[j]
             j += 1
             k += 1
 
+
 # Driver code
-if __name__ == '__main__':
-    arr = [6, 5, 4, 8, 1, 9]
-    print("Original Delivery Times:", arr)
+if __name__ == "__main__":
+    arr = [38, 27, 43, 3, 9, 82, 10]
+    print("Original array:", arr)
     mergeSort(arr)
-    print("Sorted by Delivery Time (Ascending):", arr)
+    print("Sorted array:", arr)
 
-
-
-int main() {
-    int sortedArray[] = {2, 5, 8, 12, 16, 23, 38, 56, 72, 91};    
-    int size = sizeof(sortedArray) / sizeof(sortedArray[0]);	      
-    int targetElement = 23;    
-
-    int result = binarySearch(sortedArray, size, targetElement);
-
-    if (result != -1) {
-        cout << "Element " << targetElement << " found at index: " << result << endl;
-    } 
-    else {
-        cout << "Element " << targetElement << " not found in the array." << endl;
-    }
-
-    return 0;
-}
