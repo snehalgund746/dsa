@@ -72,6 +72,9 @@ CREATE TABLE Student(
 INSERT INTO Student VALUES(1,'Rahul');
 INSERT INTO Student VALUES(2,'Sneha');
 
+DROP USER IF EXISTS user1;
+DROP ROLE IF EXISTS manager;
+
 CREATE USER user1 IDENTIFIED BY '123';
 
 CREATE ROLE manager;
@@ -84,7 +87,7 @@ GRANT manager TO user1;
 
 REVOKE UPDATE
 ON Student
-FROM user1;
+FROM manager;
 
 SELECT * FROM Student;
 
